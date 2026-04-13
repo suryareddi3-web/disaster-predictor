@@ -11,6 +11,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "data" / "disaster.db"
 MODEL_PATH = BASE_DIR / "model.pkl"
+APP_URL = os.environ.get("APP_URL", "https://disaster-predictor.onrender.com")
 FEATURE_COLUMNS = [
     "temperature",
     "rainfall",
@@ -901,6 +902,7 @@ if __name__ == "__main__":
     if debug:
         app.run(debug=True, host=host, port=port)
     else:
+        print(f"Starting Disaster Predictor on {APP_URL} (host={host}, port={port})")
         try:
             from waitress import serve
             serve(app, host=host, port=port)

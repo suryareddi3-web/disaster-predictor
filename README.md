@@ -12,7 +12,7 @@ This project is a local disaster prediction web application built with Flask and
 ## Setup
 1. Open PowerShell and navigate to the project folder:
    ```powershell
-   cd C:\Users\govinda\Downloads\disaster_prediction_app
+   cd C:\disaster_prediction_mine_clear_2
    ```
 2. Create a Python virtual environment if you do not already have one:
    ```powershell
@@ -27,11 +27,11 @@ This project is a local disaster prediction web application built with Flask and
    ```powershell
    python init_db.py
    ```
-5. Run the app:
+5. Run the app locally:
    ```powershell
    python app.py
    ```
-6. Open your browser and visit `http://127.0.0.1:5000`
+6. Open your browser and visit `http://127.0.0.1:5000` for local testing, or use the deployed URL `https://disaster-predictor.onrender.com`
 ## Docker Deployment
 
 This project is now container-ready with a `Dockerfile` and `.dockerignore`.
@@ -55,6 +55,7 @@ Then open `http://127.0.0.1:5000` or the public IP/port of your cloud host.
 - If all weather inputs are left blank, the app attempts to fetch real-time weather from a free API for the selected Indian state.
 - If live weather is unavailable, the app falls back to state-average conditions.
 - If the app cannot find the database or model file, run `init_db.py` again.
+- The app is currently deployed at `https://disaster-predictor.onrender.com`.
 
 ## Deployment
 This app can be hosted permanently on any Python-compatible web host or PaaS such as Railway, Render, or Heroku.
