@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#f7eef0" />
+    <title>Disaster Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="background-caption" id="background-caption">Disaster prediction and forecast intelligence</div>
+    <div class="page-shell">
+      <header class="hero-card">
+        <div class="brand-strip">
+          <img src="{{ url_for('static', filename='logo.svg') }}" class="brand-logo" alt="Disaster Predictor logo" />
+          <div>
+            <p class="eyebrow brand-name">DISASTER PREDICTOR</p>
+            <h1 class="hero-title">Disaster Predictor</h1>
+            <p class="hero-subtitle">Real-time risk intelligence for India</p>
+          </div>
+        </div>
+        <p class="hero-copy">
+          Select an Indian state to view the percentage likelihood of Flood, Wildfire, and Earthquake based on live weather and historical disaster trends.
+        </p>
+          <div class="icon-grid">
+            <div class="icon-card">
+              <div class="icon-figure icon-adaptive">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="32" cy="32" r="14" stroke="currentColor" stroke-width="3" />
+                  <path d="M17 32h30" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                  <path d="M32 18c7 6 7 14 0 20" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="feature-label">Adaptive Theme</span>
+              <p class="feature-copy" id="feature-adaptive">Choose a state and district to activate theme adaptation.</p>
+            </div>
+            <div class="icon-card">
+              <div class="icon-figure icon-history">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="32" cy="32" r="18" stroke="currentColor" stroke-width="3" />
+                  <path d="M32 20v12l8 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                  <path d="M32 10a22 22 0 1 1-15 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="feature-label">History Insight</span>
+              <p class="feature-copy" id="feature-history">Location history data will load after you select your area.</p>
+            </div>
+            <div class="icon-card">
+              <div class="icon-figure icon-smart">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 26c0-5.5 4.5-10 10-10s10 4.5 10 10c0 4-2.5 7.5-5 9v7H29v-7c-2.5-1.5-5-5-5-9Z" stroke="currentColor" stroke-width="3" />
+                  <path d="M29 41h6" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                  <path d="M31 45h2" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="feature-label">Smart Results</span>
+              <p class="feature-copy" id="feature-smart">AI and model results appear once a district is selected.</p>
+            </div>
+            <div class="icon-card">
+              <div class="icon-figure icon-live">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 34a10 10 0 0 1 20 0h2a8 8 0 1 1 0 16H24a8 8 0 1 1 0-16Z" stroke="currentColor" stroke-width="3" />
+                  <path d="M30 46l-4 8M38 46l-4 8" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="feature-label">Live Forecast</span>
+              <p class="feature-copy" id="feature-live">Live weather and forecast status appear here after selection.</p>
+            </div>
+            <div class="icon-card">
+              <div class="icon-figure icon-risk">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M32 10l18 8v12c0 14-10 24-18 24S14 44 14 30V18l18-8Z" stroke="currentColor" stroke-width="3" />
+                  <path d="M32 24v10M32 38h0" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+              </div>
+              <span class="feature-label">Risk Mapping</span>
+              <p class="feature-copy" id="feature-risk">This card shows the highest local risk based on historical data.</p>
+            </div>
+            <div class="icon-card">
+              <div class="icon-figure icon-ai">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 22h20M22 30h20M22 38h20" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                  <circle cx="42" cy="22" r="3" fill="currentColor" />
+                  <circle cx="42" cy="38" r="3" fill="currentColor" />
+                  <circle cx="22" cy="46" r="3" fill="currentColor" />
+                </svg>
+              </div>
+              <span class="feature-label">AI Prediction</span>
+              <p class="feature-copy" id="feature-ai">AI prediction details will display for the selected district.</p>
+            </div>
+          </div>
+          <p id="feature-status" class="hint">Select a district to load the disaster insight cards.</p>
+        </div>
+      </header>
+
+      <main class="content-card">
+        <form method="post" class="form-panel">
+          <label for="state">Select State</label>
+          <select name="state" id="state" required>
+            <option value="">Choose a state</option>
+            {% for location in locations %}
+            <option value="{{ location }}">{{ location }}</option>
+            {% endfor %}
+          </select>
+
+          <label for="district">Select District</label>
+          <select name="district" id="district" disabled required>
+            <option value="">Choose a district</option>
+          </select>
+
+          <div class="inline-grid">
+            <div>
+              <label for="temperature">Temperature (°C)</label>
+              <input type="number" step="0.1" name="temperature" id="temperature" placeholder="e.g. 30" />
+            </div>
+            <div>
+              <label for="rainfall">Rainfall (mm)</label>
+              <input type="number" step="0.1" name="rainfall" id="rainfall" placeholder="e.g. 120" />
+            </div>
+            <div>
+              <label for="humidity">Humidity (%)</label>
+              <input type="number" step="0.1" name="humidity" id="humidity" placeholder="e.g. 70" />
+            </div>
+            <div>
+              <label for="wind_speed">Wind Speed (km/h)</label>
+              <input type="number" step="0.1" name="wind_speed" id="wind_speed" placeholder="e.g. 45" />
+            </div>
+            <div>
+              <label for="soil_moisture">Soil Moisture (%)</label>
+              <input type="number" step="0.1" name="soil_moisture" id="soil_moisture" placeholder="e.g. 35" />
+            </div>
+          </div>
+
+          <p class="hint">
+            Select your state and district, then optionally enter current weather values. Leave blank to use live weather for the selected district.
+          </p>
+
+          <div class="form-actions">
+            <button type="button" class="secondary-button" id="refresh-button" disabled>Refresh weather</button>
+            <button type="submit" class="primary-button" id="predict-button" disabled>Predict</button>
+          </div>
+        </form>
+      </main>
+      <script>
+        const stateSelect = document.getElementById('state');
+        const districtSelect = document.getElementById('district');
+        const predictButton = document.getElementById('predict-button');
+        const refreshButton = document.getElementById('refresh-button');
+        const featureStatus = document.getElementById('feature-status');
+        const backgroundCaption = document.getElementById('background-caption');
+        const districtMap = {{ district_map | tojson }};
+
+        const disasterBackground = "https://source.unsplash.com/1600x900/?disaster+storm+flood+fire";
+        const stateBackgrounds = {
+          "Andaman & Nicobar": "https://source.unsplash.com/1600x900/?Andaman+Nicobar+beaches+islands",
+          "Andhra Pradesh": "https://source.unsplash.com/1600x900/?Tirupati+Temple+Andhra+Pradesh",
+          "Arunachal Pradesh": "https://source.unsplash.com/1600x900/?Arunachal+Pradesh+mountains+tribal",
+          "Assam": "https://source.unsplash.com/1600x900/?Assam+tea+garden+Brahmaputra",
+          "Bihar": "https://source.unsplash.com/1600x900/?Bihar+heritage+river",
+          "Chandigarh": "https://source.unsplash.com/1600x900/?Chandigarh+city+garden",
+          "Chhattisgarh": "https://source.unsplash.com/1600x900/?Chhattisgarh+forest+tribal",
+          "Dadra & Nagar Haveli & Daman & Diu": "https://source.unsplash.com/1600x900/?Dadra+Nagar+Haveli+Daman+Diu+coast",
+          "Delhi": "https://source.unsplash.com/1600x900/?New+Delhi+India+city",
+          "Goa": "https://source.unsplash.com/1600x900/?Goa+beach+coast",
+          "Gujarat": "https://source.unsplash.com/1600x900/?Gujarat+Statue+of+Unity+desert",
+          "Haryana": "https://source.unsplash.com/1600x900/?Haryana+fields+agriculture",
+          "Himachal Pradesh": "https://source.unsplash.com/1600x900/?Himachal+Pradesh+mountains+temples",
+          "Jharkhand": "https://source.unsplash.com/1600x900/?Jharkhand+forest+mines",
+          "Karnataka": "https://source.unsplash.com/1600x900/?Karnataka+temples+Bangalore",
+          "Kerala": "https://source.unsplash.com/1600x900/?Kerala+coconut+trees+backwaters",
+          "Ladakh": "https://source.unsplash.com/1600x900/?Ladakh+mountains+valleys",
+          "Lakshadweep": "https://source.unsplash.com/1600x900/?Lakshadweep+island+lagoon",
+          "Madhya Pradesh": "https://source.unsplash.com/1600x900/?Madhya+Pradesh+forest+fort",
+          "Maharashtra": "https://source.unsplash.com/1600x900/?Maharashtra+Mumbai+Western+Ghats",
+          "Manipur": "https://source.unsplash.com/1600x900/?Manipur+lakes+tribal",
+          "Meghalaya": "https://source.unsplash.com/1600x900/?Meghalaya+waterfalls+clouds",
+          "Mizoram": "https://source.unsplash.com/1600x900/?Mizoram+hills+greenery",
+          "Nagaland": "https://source.unsplash.com/1600x900/?Nagaland+tribal+festival",
+          "Odisha": "https://source.unsplash.com/1600x900/?Odisha+temple+coast",
+          "Puducherry": "https://source.unsplash.com/1600x900/?Puducherry+beach+French+Quarter",
+          "Punjab": "https://source.unsplash.com/1600x900/?Punjab+Golden+Temple+fields",
+          "Rajasthan": "https://source.unsplash.com/1600x900/?Rajasthan+desert+fortress",
+          "Sikkim": "https://source.unsplash.com/1600x900/?Sikkim+monastery+mountains",
+          "Tamil Nadu": "https://source.unsplash.com/1600x900/?Tamil+Nadu+temple+tradition",
+          "Telangana": "https://source.unsplash.com/1600x900/?Telangana+Charminar+Hyderabad",
+          "Tripura": "https://source.unsplash.com/1600x900/?Tripura+Palace+temple",
+          "Uttar Pradesh": "https://source.unsplash.com/1600x900/?Uttar+Pradesh+Varanasi+Ganges",
+          "Uttarakhand": "https://source.unsplash.com/1600x900/?Uttarakhand+Himalayas+river",
+          "West Bengal": "https://source.unsplash.com/1600x900/?West+Bengal+Howrah+Bridge+Sundarbans",
+        };
+
+        const districtBackgrounds = {
+          "Mumbai": "https://source.unsplash.com/1600x900/?Mumbai+skyline+coast",
+          "Delhi": "https://source.unsplash.com/1600x900/?New+Delhi+India+city",
+          "Chennai": "https://source.unsplash.com/1600x900/?Chennai+marina+bay",
+          "Kolkata": "https://source.unsplash.com/1600x900/?Kolkata+Howrah+Bridge",
+          "Bengaluru": "https://source.unsplash.com/1600x900/?Bengaluru+city+park",
+          "Hyderabad": "https://source.unsplash.com/1600x900/?Hyderabad+Charminar",
+          "Pune": "https://source.unsplash.com/1600x900/?Pune+city+sunset",
+        };
+
+        const defaultTheme = {
+          pageBg: 'linear-gradient(180deg, #fffafa 0%, #f5eded 100%)',
+          primary: '#c0392b',
+          primarySoft: '#f7d7d5',
+          border: 'rgba(192, 57, 43, 0.14)',
+        };
+
+        function hashString(value) {
+          let hash = 0;
+          for (let i = 0; i < value.length; i += 1) {
+            hash = (hash << 5) - hash + value.charCodeAt(i);
+            hash |= 0;
+          }
+          return Math.abs(hash);
+        }
+
+        function getTheme(state, district) {
+          const districtImage = district
+            ? districtBackgrounds[district]
+              || `https://source.unsplash.com/1600x900/?${encodeURIComponent(district)}+${encodeURIComponent(state)}+landmark`
+            : null;
+          const imageUrl = districtImage
+            || (state ? stateBackgrounds[state] || `https://source.unsplash.com/1600x900/?${encodeURIComponent(state)}+India` : disasterBackground);
+
+          const stateHue = state ? hashString(state) % 360 : 10;
+          const districtHue = district ? hashString(district) % 360 : (stateHue + 60) % 360;
+          const accent = `hsl(${districtHue}, 76%, 42%)`;
+          const accentSoft = `hsl(${districtHue}, 78%, 90%)`;
+          const borderColor = `hsla(${districtHue}, 72%, 45%, 0.18)`;
+          const pageImage = `url('${imageUrl}')`;
+          const subImage = `linear-gradient(180deg, rgba(255,255,255,0.36), rgba(255,255,255,0.18)), url('${imageUrl}')`;
+
+          return {
+            pageImage,
+            subImage,
+            primary: accent,
+            primarySoft: accentSoft,
+            border: borderColor,
+          };
+        }
+
+        function getStateCaption(state) {
+          const captions = {
+            "Andhra Pradesh": "Tirupati temples and coastal heritage",
+            "Arunachal Pradesh": "Misty hills and tribal mountain culture",
+            "Assam": "Tea gardens, Brahmaputra and wildlife",
+            "Bihar": "Ancient heritage and river plains",
+            "Chhattisgarh": "Dense forests and tribal landscapes",
+            "Goa": "Beaches, spice routes and coastal energy",
+            "Gujarat": "Statue of Unity and desert culture",
+            "Haryana": "Green fields and fast-rising industry",
+            "Himachal Pradesh": "Himalayan mountain escapes",
+            "Jharkhand": "Mineral belt and tribal folklore",
+            "Karnataka": "Silicon valleys and ancient temples",
+            "Kerala": "Backwaters, spices and coastal calm",
+            "Madhya Pradesh": "Wild forests and historic forts",
+            "Maharashtra": "Mumbai energy and western ghats",
+            "Manipur": "Lakes, dance and hill horizons",
+            "Meghalaya": "Waterfalls and cloud forests",
+            "Mizoram": "Peaceful hills and bamboo culture",
+            "Nagaland": "Tribal traditions and highland craft",
+            "Odisha": "Temple art and coastal rhythms",
+            "Punjab": "Golden temples and fertile plains",
+            "Rajasthan": "Palaces, deserts and desert festivals",
+            "Sikkim": "Mountain monasteries and alpine valleys",
+            "Tamil Nadu": "Temple cities and classical culture",
+            "Telangana": "Charminar heritage and contemporary life",
+            "Tripura": "Silk traditions and palace gardens",
+            "Uttar Pradesh": "River Ganges heritage and historic towns",
+            "Uttarakhand": "Sacred mountains and river valleys",
+            "West Bengal": "Kolkata culture and Sundarbans delta",
+          };
+          return captions[state] || "Regional culture and landmark spirit";
+        }
+
+        function updateBackgroundCaption(state) {
+          if (!backgroundCaption) {
+            return;
+          }
+          if (!state) {
+            backgroundCaption.textContent = 'Disaster prediction and weather risk intelligence';
+          } else {
+            backgroundCaption.textContent = getStateCaption(state);
+          }
+        }
+
+        function applyTheme(state, district) {
+          const theme = getTheme(state, district);
+          document.documentElement.style.setProperty('--page-image', theme.pageImage);
+          document.documentElement.style.setProperty('--sub-image', theme.subImage);
+          document.documentElement.style.setProperty('--primary', theme.primary);
+          document.documentElement.style.setProperty('--primary-soft', theme.primarySoft);
+          document.documentElement.style.setProperty('--border', theme.border);
+          updateBackgroundCaption(state);
+        }
+
+        function revealOnScroll() {
+          const elements = document.querySelectorAll('.scroll-reveal');
+          const triggerBottom = window.innerHeight * 0.9;
+
+          elements.forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerBottom) {
+              element.classList.add('visible');
+            }
+          });
+        }
+
+        function setupTilt(elements) {
+          elements.forEach((element) => {
+            element.addEventListener('mousemove', (event) => {
+              const rect = element.getBoundingClientRect();
+              const x = event.clientX - rect.left;
+              const y = event.clientY - rect.top;
+              const rotateY = (x / rect.width - 0.5) * 10;
+              const rotateX = -(y / rect.height - 0.5) * 8;
+              element.style.transform = `translate3d(0, 0, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            element.addEventListener('mouseleave', () => {
+              element.style.transform = '';
+            });
+          });
+        }
+
+        function resetDistrictSelect() {
+          districtSelect.innerHTML = '<option value="">Choose a district</option>';
+          districtSelect.disabled = true;
+        }
+
+        function updatePredictButton() {
+          const ready = stateSelect.value !== '' && districtSelect.value !== '';
+          predictButton.disabled = !ready;
+          refreshButton.disabled = !ready;
+        }
+
+        function updateFeatureCards(data) {
+          document.getElementById('feature-adaptive').textContent = data.adaptive;
+          document.getElementById('feature-history').textContent =
+            data.history.summary || data.history;
+          document.getElementById('feature-smart').textContent = data.smart;
+          document.getElementById('feature-live').textContent = data.weather_report && data.weather_report.source === 'live'
+            ? 'Live weather: ' + data.weather_report.temperature + '°C · ' + data.weather_report.humidity + '% · ' +
+              (data.weather_report.daily_precipitation != null ? data.weather_report.daily_precipitation : data.weather_report.rainfall) +
+              'mm today'
+            : data.live_forecast;
+          document.getElementById('feature-risk').textContent = data.risk_mapping;
+          document.getElementById('feature-ai').textContent = data.ai_prediction;
+        }
+
+        function setFeatureStatus(message, isError = false) {
+          if (!featureStatus) {
+            return;
+          }
+          featureStatus.textContent = message;
+          featureStatus.style.color = isError ? '#922B21' : '#34495E';
+        }
+
+        function loadLocationInfo(state, district) {
+          if (!state || !district) {
+            return;
+          }
+
+          setFeatureStatus('Loading location insights...', false);
+          refreshButton.disabled = true;
+
+          fetch(`/location-info?state=${encodeURIComponent(state)}&district=${encodeURIComponent(district)}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                console.warn(data.error);
+                setFeatureStatus('Unable to load insight cards: ' + data.error, true);
+                return;
+              }
+              updateFeatureCards(data);
+              setFeatureStatus('Insight cards updated for ' + district + ', ' + state + '.');
+            })
+            .catch((error) => {
+              console.error('Unable to load location info:', error);
+              setFeatureStatus('Unable to load location insights. Check your network and try again.', true);
+            })
+            .finally(() => {
+              refreshButton.disabled = false;
+            });
+        }
+
+        let locationRefreshTimer = null;
+
+        refreshButton.addEventListener('click', () => {
+          loadLocationInfo(stateSelect.value, districtSelect.value);
+        });
+
+        stateSelect.addEventListener('change', () => {
+          resetDistrictSelect();
+          const selectedState = stateSelect.value;
+          if (!selectedState) {
+            applyTheme('', '');
+            updatePredictButton();
+            return;
+          }
+
+          const districts = districtMap[selectedState] || [];
+          for (const district of districts) {
+            const option = document.createElement('option');
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+          }
+          districtSelect.disabled = false;
+          applyTheme(selectedState, '');
+          updatePredictButton();
+        });
+
+        districtSelect.addEventListener('change', () => {
+          const selectedState = stateSelect.value;
+          const selectedDistrict = districtSelect.value;
+          applyTheme(selectedState, selectedDistrict);
+          updatePredictButton();
+          loadLocationInfo(selectedState, selectedDistrict);
+          if (locationRefreshTimer) {
+            clearInterval(locationRefreshTimer);
+          }
+          if (selectedState && selectedDistrict) {
+            locationRefreshTimer = setInterval(() => {
+              loadLocationInfo(selectedState, selectedDistrict);
+            }, 15 * 60 * 1000);
+          }
+        });
+
+        window.addEventListener('load', () => {
+          if (stateSelect.value && districtSelect.value) {
+            loadLocationInfo(stateSelect.value, districtSelect.value);
+          }
+        });
+
+        document.querySelectorAll('.icon-card').forEach((item) => {
+          item.classList.add('scroll-reveal', 'interactive-tilt');
+        });
+
+        setupTilt(document.querySelectorAll('.interactive-tilt'));
+
+        const particleCanvas = document.getElementById('particle-canvas');
+        const particleCtx = particleCanvas?.getContext('2d');
+        const particles = [];
+        const enableParticles = false;
+
+        function resizeParticles() {
+          if (!particleCanvas || !enableParticles) {
+            return;
+          }
+          particleCanvas.width = window.innerWidth;
+          particleCanvas.height = window.innerHeight;
+          createParticles();
+        }
+
+        function createParticles() {
+          if (!particleCanvas) {
+            return;
+          }
+          particles.length = 0;
+          const count = Math.max(28, Math.floor(window.innerWidth / 38));
+          for (let i = 0; i < count; i += 1) {
+            particles.push({
+              x: Math.random() * particleCanvas.width,
+              y: Math.random() * particleCanvas.height,
+              vx: (Math.random() - 0.5) * 0.35,
+              vy: (Math.random() - 0.5) * 0.35,
+              size: 1.4 + Math.random() * 2.2,
+              alpha: 0.18 + Math.random() * 0.24,
+            });
+          }
+        }
+
+        function animateParticles() {
+          if (!particleCanvas || !particleCtx || !enableParticles) {
+            return;
+          }
+
+          particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+          const lineLimit = 110;
+
+          particles.forEach((particle) => {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            if (particle.x < 0) particle.x = particleCanvas.width;
+            if (particle.x > particleCanvas.width) particle.x = 0;
+            if (particle.y < 0) particle.y = particleCanvas.height;
+            if (particle.y > particleCanvas.height) particle.y = 0;
+
+            particleCtx.beginPath();
+            particleCtx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            particleCtx.fillStyle = `rgba(255,255,255,${particle.alpha})`;
+            particleCtx.fill();
+          });
+
+          for (let i = 0; i < particles.length; i += 1) {
+            for (let j = i + 1; j < particles.length; j += 1) {
+              const a = particles[i];
+              const b = particles[j];
+              const dx = a.x - b.x;
+              const dy = a.y - b.y;
+              const d = Math.sqrt(dx * dx + dy * dy);
+              if (d < lineLimit) {
+                particleCtx.strokeStyle = `rgba(255,255,255,${(1 - d / lineLimit) * 0.13})`;
+                particleCtx.lineWidth = 0.6;
+                particleCtx.beginPath();
+                particleCtx.moveTo(a.x, a.y);
+                particleCtx.lineTo(b.x, b.y);
+                particleCtx.stroke();
+              }
+            }
+          }
+
+          requestAnimationFrame(animateParticles);
+        }
+
+        if (enableParticles) {
+          window.addEventListener('resize', resizeParticles);
+          resizeParticles();
+          animateParticles();
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('resize', revealOnScroll);
+        applyTheme('', '');
+        revealOnScroll();
+      </script>
+    </div>
+  </body>
+</html>
