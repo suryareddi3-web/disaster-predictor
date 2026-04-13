@@ -1,0 +1,35 @@
+# .gitignore for Python Flask deployment
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+dist/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.class
+
+# VS Code
+.vscode/
+
+# SQLite
+*.db
+data/*.db
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Tunnel config
+ngrok.yml
