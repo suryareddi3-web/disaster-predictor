@@ -46,6 +46,9 @@ This project now includes a Streamlit app entrypoint at `streamlit_app.py`.
    ```
 
 For Streamlit Cloud, push this repository to GitHub and connect it to your Streamlit account.
+
+This repository now includes Streamlit deployment support via `runtime.txt` and `.streamlit/config.toml`.
+
 ## Docker Deployment
 
 This project is now container-ready with a `Dockerfile` and `.dockerignore`.
