@@ -32,6 +32,20 @@ This project is a local disaster prediction web application built with Flask and
    python app.py
    ```
 6. Open your browser and visit `http://127.0.0.1:5000` for local testing, or use the deployed URL `https://disaster-predictor.onrender.com`
+## Streamlit Deployment
+
+This project now includes a Streamlit app entrypoint at `streamlit_app.py`.
+
+1. Install dependencies:
+   ```powershell
+   python -m pip install -r requirements.txt
+   ```
+2. Run the app locally:
+   ```powershell
+   streamlit run streamlit_app.py
+   ```
+
+For Streamlit Cloud, push this repository to GitHub and connect it to your Streamlit account.
 ## Docker Deployment
 
 This project is now container-ready with a `Dockerfile` and `.dockerignore`.
