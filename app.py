@@ -7,6 +7,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from init_db import build_database
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "data" / "disaster.db"
@@ -265,9 +266,7 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "change-this-secret")
 
 def get_db_connection():
     if not DB_PATH.exists():
-        raise FileNotFoundError(
-            f"Database file not found. Run init_db.py first to create {DB_PATH}."
-        )
+        build_database()
 
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -276,9 +275,7 @@ def get_db_connection():
 
 def load_model():
     if not MODEL_PATH.exists():
-        raise FileNotFoundError(
-            f"Model file not found. Run init_db.py first to create {MODEL_PATH}."
-        )
+        build_database()
 
     with open(MODEL_PATH, "rb") as model_file:
         return pickle.load(model_file)
