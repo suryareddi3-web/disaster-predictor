@@ -195,70 +195,23 @@
           return Math.abs(hash);
         }
 
-        const disasterBackground = "https://source.unsplash.com/1600x900/?disaster+storm+flood+fire";
-        const stateBackgrounds = {
-          "Andaman & Nicobar": "https://source.unsplash.com/1600x900/?Andaman+Nicobar+beaches+islands",
-          "Andhra Pradesh": "https://source.unsplash.com/1600x900/?Tirupati+Temple+Andhra+Pradesh",
-          "Arunachal Pradesh": "https://source.unsplash.com/1600x900/?Arunachal+Pradesh+mountains+tribal",
-          "Assam": "https://source.unsplash.com/1600x900/?Assam+tea+garden+Brahmaputra",
-          "Bihar": "https://source.unsplash.com/1600x900/?Bihar+heritage+river",
-          "Chandigarh": "https://source.unsplash.com/1600x900/?Chandigarh+city+garden",
-          "Chhattisgarh": "https://source.unsplash.com/1600x900/?Chhattisgarh+forest+tribal",
-          "Dadra & Nagar Haveli & Daman & Diu": "https://source.unsplash.com/1600x900/?Dadra+Nagar+Haveli+Daman+Diu+coast",
-          "Delhi": "https://source.unsplash.com/1600x900/?New+Delhi+India+city",
-          "Goa": "https://source.unsplash.com/1600x900/?Goa+beach+coast",
-          "Gujarat": "https://source.unsplash.com/1600x900/?Gujarat+Statue+of+Unity+desert",
-          "Haryana": "https://source.unsplash.com/1600x900/?Haryana+fields+agriculture",
-          "Himachal Pradesh": "https://source.unsplash.com/1600x900/?Himachal+Pradesh+mountains+temples",
-          "Jharkhand": "https://source.unsplash.com/1600x900/?Jharkhand+forest+mines",
-          "Karnataka": "https://source.unsplash.com/1600x900/?Karnataka+temples+Bangalore",
-          "Kerala": "https://source.unsplash.com/1600x900/?Kerala+coconut+trees+backwaters",
-          "Ladakh": "https://source.unsplash.com/1600x900/?Ladakh+mountains+valleys",
-          "Lakshadweep": "https://source.unsplash.com/1600x900/?Lakshadweep+island+lagoon",
-          "Madhya Pradesh": "https://source.unsplash.com/1600x900/?Madhya+Pradesh+forest+fort",
-          "Maharashtra": "https://source.unsplash.com/1600x900/?Maharashtra+Mumbai+Western+Ghats",
-          "Manipur": "https://source.unsplash.com/1600x900/?Manipur+lakes+tribal",
-          "Meghalaya": "https://source.unsplash.com/1600x900/?Meghalaya+waterfalls+clouds",
-          "Mizoram": "https://source.unsplash.com/1600x900/?Mizoram+hills+greenery",
-          "Nagaland": "https://source.unsplash.com/1600x900/?Nagaland+tribal+festival",
-          "Odisha": "https://source.unsplash.com/1600x900/?Odisha+temple+coast",
-          "Puducherry": "https://source.unsplash.com/1600x900/?Puducherry+beach+French+Quarter",
-          "Punjab": "https://source.unsplash.com/1600x900/?Punjab+Golden+Temple+fields",
-          "Rajasthan": "https://source.unsplash.com/1600x900/?Rajasthan+desert+fortress",
-          "Sikkim": "https://source.unsplash.com/1600x900/?Sikkim+monastery+mountains",
-          "Tamil Nadu": "https://source.unsplash.com/1600x900/?Tamil+Nadu+temple+tradition",
-          "Telangana": "https://source.unsplash.com/1600x900/?Telangana+Charminar+Hyderabad",
-          "Tripura": "https://source.unsplash.com/1600x900/?Tripura+Palace+temple",
-          "Uttar Pradesh": "https://source.unsplash.com/1600x900/?Uttar+Pradesh+Varanasi+Ganges",
-          "Uttarakhand": "https://source.unsplash.com/1600x900/?Uttarakhand+Himalayas+river",
-          "West Bengal": "https://source.unsplash.com/1600x900/?West+Bengal+Howrah+Bridge+Sundarbans",
-        };
-
-        const districtBackgrounds = {
-          "Mumbai": "https://source.unsplash.com/1600x900/?Mumbai+skyline+coast",
-          "Delhi": "https://source.unsplash.com/1600x900/?New+Delhi+India+city",
-          "Chennai": "https://source.unsplash.com/1600x900/?Chennai+marina+bay",
-          "Kolkata": "https://source.unsplash.com/1600x900/?Kolkata+Howrah+Bridge",
-          "Bengaluru": "https://source.unsplash.com/1600x900/?Bengaluru+city+park",
-          "Hyderabad": "https://source.unsplash.com/1600x900/?Hyderabad+Charminar",
-          "Pune": "https://source.unsplash.com/1600x900/?Pune+city+sunset",
-        };
+        const disasterBackground = 'none';
+        const stateBackgrounds = {};
+        const districtBackgrounds = {};
 
         function getTheme(state, district) {
-          const districtImage = district
-            ? districtBackgrounds[district]
-              || `https://source.unsplash.com/1600x900/?${encodeURIComponent(district)}+${encodeURIComponent(state)}+landmark`
-            : null;
-          const imageUrl = districtImage
-            || (state ? stateBackgrounds[state] || `https://source.unsplash.com/1600x900/?${encodeURIComponent(state)}+India` : disasterBackground);
+          const districtImage = district ? districtBackgrounds[district] : null;
+          const imageUrl = districtImage || (state ? stateBackgrounds[state] : disasterBackground);
 
           const stateHue = state ? hashString(state) % 360 : 10;
           const districtHue = district ? hashString(district) % 360 : (stateHue + 60) % 360;
           const accent = `hsl(${districtHue}, 76%, 42%)`;
           const accentSoft = `hsl(${districtHue}, 78%, 90%)`;
           const borderColor = `hsla(${districtHue}, 72%, 45%, 0.18)`;
-          const pageImage = `url('${imageUrl}')`;
-          const subImage = `linear-gradient(180deg, rgba(255,255,255,0.36), rgba(255,255,255,0.18)), url('${imageUrl}')`;
+          const pageImage = imageUrl !== 'none' ? `url('${imageUrl}')` : 'none';
+          const subImage = imageUrl !== 'none'
+            ? `linear-gradient(180deg, rgba(255,255,255,0.36), rgba(255,255,255,0.18)), url('${imageUrl}')`
+            : 'none';
 
           return {
             pageImage,

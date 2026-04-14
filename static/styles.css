@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --page-image: url("https://source.unsplash.com/1600x900/?storm+disaster+weather");
+  --page-image: none;
   --page-bg: linear-gradient(180deg, rgba(255, 250, 250, 0.78), rgba(245, 237, 237, 0.78));
   --page-overlay: radial-gradient(circle at top left, rgba(255,255,255,0.72), transparent 34%), radial-gradient(circle at bottom right, rgba(255,255,255,0.5), transparent 26%);
   --panel-bg: rgba(255, 255, 255, 0.76);

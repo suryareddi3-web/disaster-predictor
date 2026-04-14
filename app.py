@@ -19,6 +19,9 @@ FEATURE_COLUMNS = [
     "wind_speed",
     "soil_moisture",
 ]
+WEATHER_TIMEOUT = (3, 5)
+LOCATIONS_CACHE = None
+DISTRICT_MAP_CACHE = None
 
 DISTRICT_MAP = {
     "Andhra Pradesh": [
@@ -286,14 +289,23 @@ MODEL_CLASSES = MODEL_DATA["classes"]
 
 
 def get_locations():
+    global LOCATIONS_CACHE
+    if LOCATIONS_CACHE is not None:
+        return LOCATIONS_CACHE
+
     with get_db_connection() as conn:
         rows = conn.execute(
             "SELECT DISTINCT state FROM state_stats ORDER BY state"
         ).fetchall()
-        return [row["state"] for row in rows]
+        LOCATIONS_CACHE = [row["state"] for row in rows]
+    return LOCATIONS_CACHE
 
 
 def get_district_map():
+    global DISTRICT_MAP_CACHE
+    if DISTRICT_MAP_CACHE is not None:
+        return DISTRICT_MAP_CACHE
+
     with get_db_connection() as conn:
         rows = conn.execute(
             "SELECT DISTINCT state, district FROM district_stats ORDER BY state, district"
@@ -310,7 +322,8 @@ def get_district_map():
                 if district not in district_map[state]:
                     district_map[state].append(district)
 
-    return district_map
+    DISTRICT_MAP_CACHE = district_map
+    return DISTRICT_MAP_CACHE
 
 
 def get_districts(state):
@@ -691,7 +704,7 @@ def fetch_live_weather(state, district):
     }
 
     try:
-        response = requests.get(OPEN_METEO_URL, params=params, timeout=10)
+        response = requests.get(OPEN_METEO_URL, params=params, timeout=WEATHER_TIMEOUT)
         response.raise_for_status()
         data = response.json()
     except Exception:
